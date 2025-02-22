@@ -31,8 +31,11 @@ class Database
 
             //Desactiva oa emulación de sentencias preparadas
             self::$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+            echo json_encode(["message" => "Conexión exitosa"]);
+            
         } catch (PDOException $e) {
-            //echo $e->getMessage();
+            echo $e->getMessage();
             error_log("Error en la conexion ". $e->getMessage());
             return null;
         }

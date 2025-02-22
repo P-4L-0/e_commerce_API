@@ -1,5 +1,4 @@
 CREATE DATABASE e_commerce;
-
 USE e_commerce;
 
 CREATE TABLE usuarios (
@@ -8,7 +7,7 @@ CREATE TABLE usuarios (
     email varchar(100) UNIQUE NOT NULL,
     direccion varchar(100) NOT NULL,
     telefono char(9) NOT NULL,
-    contraseña varchar(255) NOT NULL
+    contrasenia varchar(255) NOT NULL
 );
 
 CREATE TABLE categoria(
@@ -45,7 +44,7 @@ CREATE TABLE envíos(
     FOREIGN KEY (cliente_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE reseñas(
+CREATE TABLE resenias(
     id int AUTO_INCREMENT PRIMARY KEY,
     usuario_id int,
     producto_id int,

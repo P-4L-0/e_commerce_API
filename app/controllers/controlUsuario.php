@@ -50,6 +50,34 @@ class UsuarioControlador
         );
     }
 
+    public function register(): void{
+
+        
+        $data = json_decode(file_get_contents("PHP://input",true));
+
+        if(!isset($data['nombre'], $data['email'], $data['direccion'], $data['telefeno'], $data['contraseña'])){
+            http_response_code(400);
+            echo json_encode(["Error" => "Nombre, correo y contraseña son  requeridos"]);
+            return;
+        }
+
+        if($this->user->obtener_usuario($data['email'])){
+            http_response_code(409);
+            echo json_encode(["Error" => "El correo ya existe"]);
+            return;
+        }
+
+        $hash_passwd = password_hash($data['contraseña'], PASSWORD_BCRYPT);
+
+        try{
+            $new_user = $this->user->crear_usuario($data['nombre'], $data['email'],$data['direccion'], $data['telefono'], $hash_passwd);
+        }catch(PDOException $e){
+            echo json_encode(["Error" => $e]);
+        }
+
+        echo json_encode(["message" => "Registro exitoso", "usuario" => $new_user]);
+    }
+
 }
 
 /**
