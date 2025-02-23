@@ -6,7 +6,7 @@ class Usuario
 {
     private PDO $db;
 
-    public function __construct($connection)
+    public function __construct()
     {
         $this->db = Database::connection();
     }
@@ -21,7 +21,7 @@ class Usuario
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtener_usuario($email): array{
+    public function obtener_usuario($email): ?array{
         $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email");    
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: NULL;
@@ -29,7 +29,7 @@ class Usuario
     }
 
     public function crear_usuario($nombre,$email,$direccion, $telefono, $contraseña):void{
-        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, direccion, telefono, contraseña) VALUES (?,?,?,?,?) ");
+        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, direccion, telefono, contrasenia) VALUES (?,?,?,?,?) ");
         $stmt->execute([$nombre, $email, $direccion, $telefono, $contraseña]);
     } 
 

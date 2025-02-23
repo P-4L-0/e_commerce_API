@@ -5,18 +5,16 @@ declare(strict_types=1);
 class Database
 {
 
-    private static PDO $connection = null;
+    private static ?PDO $connection = null;
 
     public static function connection(): PDO
     {
-        //variables de la bd
-        if(self::$connection == null){
-            $host = "";
-            $dbname = "e_commerce";
-            $user = "";
-            $passwd = "";
-        } 
 
+        //variables de entorno
+        $host = "db";
+        $dbname = "e_commerce";
+        $user = "user";
+        $passwd = "secret";
 
         /**
          * @param object $DBC database connection
@@ -24,20 +22,22 @@ class Database
          */
         //conexión a la bd
         try {
-            self::$connection = new PDO("mysql:host=$host;dbname=$dbname;", $user, $passwd);
+            if (self::$connection === null) {
 
-            //manejo de errores
-            self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$connection = new PDO("mysql:host=$host;dbname=$dbname;", $user, $passwd);
 
-            //Desactiva oa emulación de sentencias preparadas
-            self::$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                //manejo de errores
+                self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            echo json_encode(["message" => "Conexión exitosa"]);
-            
+                //Desactiva oa emulación de sentencias preparadas
+                self::$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+                // echo json_encode(["message" => "Conexión exitosa"]);
+            }
         } catch (PDOException $e) {
             echo $e->getMessage();
-            error_log("Error en la conexion ". $e->getMessage());
-            return null;
+            error_log("Error en la conexion " . $e->getMessage());
+            // return null;
         }
 
         return self::$connection;

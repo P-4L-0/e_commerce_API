@@ -16,9 +16,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD:  root
-      MYSQ_DATABASE: test_db
+      MYSQ_DATABASE: e_commerce
       MYSQL_USER: user
-      MYSQL_PASSWORD: password 
+      MYSQL_PASSWORD: secret 
     ports:
       - "3306:3306"
     volumes:

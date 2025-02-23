@@ -19,15 +19,14 @@ class UsuarioControlador
         $data = json_decode(file_get_contents("php://input"), true);
 
         if (!isset($data['email'], $data['password'])) {
-            //codigo malo dea xd wazaaa :v
             http_response_code(400);
             echo json_encode(["Error" => "El correo y la contraseña con requeridos"]);
         }
 
         //Obtener usuario por email
-        $user = $this > user->obtener_usuario($data['email']);
+        $user = $this->user->obtener_usuario($data['email']);
 
-        if (!user || !password_verify($data['password'], $user['contraseña'])) {
+        if (!$user || !password_verify($data['password'], $user['contrasenia'])) {
             http_response_code(401);
             echo json_encode(["Error" => "credenciales incorrectas"]);
             return;
@@ -53,9 +52,9 @@ class UsuarioControlador
     public function register(): void{
 
         
-        $data = json_decode(file_get_contents("PHP://input",true));
+        $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['nombre'], $data['email'], $data['direccion'], $data['telefeno'], $data['contraseña'])){
+        if(!isset($data['nombre'], $data['email'], $data['direccion'], $data['telefono'], $data['contraseña'])){
             http_response_code(400);
             echo json_encode(["Error" => "Nombre, correo y contraseña son  requeridos"]);
             return;
@@ -75,7 +74,7 @@ class UsuarioControlador
             echo json_encode(["Error" => $e]);
         }
 
-        echo json_encode(["message" => "Registro exitoso", "usuario" => $new_user]);
+        echo json_encode(["message" => "Registro exitoso"]);
     }
 
 }
