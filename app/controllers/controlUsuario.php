@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . "/../models/usuarioModel.php";
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+USE Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 
 class UsuarioControlador
 {
@@ -32,19 +37,25 @@ class UsuarioControlador
             return;
         }
 
-        //generar token simulado(por ahora) no es seguro del todo xd
+        $createTime = time();
+        $expiration = $createTime + 3600;
+        $key = "APP_PASSWORD"; //esto no debería de hacerse pero lo hago ps pq puedo :v
+        $payload = [
+            "exp" => $expiration,
+            "data" => $user['id']
+        ];
 
-        $token = bin2hex(random_bytes(32));
+        $jwt = JWT::encode($payload, $key, 'HS256');
 
         echo json_encode(
             [
-                "Mensaje" => "Inicio de sesion existoso",
+                "Mensaje" => "Inicio de sesión exitoso",
                 "User" => [
                     "id" => $user['id'],
                     "nombre" => $user['nombre'],
                     "email" => $user['email']
                 ],
-                "token" => $token
+                "token" => $jwt
             ]
         );
     }
