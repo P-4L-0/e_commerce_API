@@ -65,7 +65,7 @@ class UsuarioControlador
         
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['nombre'], $data['email'], $data['direccion'], $data['telefono'], $data['contraseña'])){
+        if(!isset($data['nombre'], $data['email'], $data['direccion'], $data['telefono'], $data['password'])){
             http_response_code(400);
             echo json_encode(["Error" => "Nombre, correo y contraseña son  requeridos"]);
             return;
@@ -77,7 +77,7 @@ class UsuarioControlador
             return;
         }
 
-        $hash_passwd = password_hash($data['contraseña'], PASSWORD_BCRYPT);
+        $hash_passwd = password_hash($data['password'], PASSWORD_BCRYPT);
 
         try{
             $new_user = $this->user->crear_usuario($data['nombre'], $data['email'],$data['direccion'], $data['telefono'], $hash_passwd);

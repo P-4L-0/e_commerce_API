@@ -13,7 +13,8 @@ CREATE TABLE usuarios (
     email varchar(100) UNIQUE NOT NULL,
     direccion varchar(100) NOT NULL,
     telefono char(15) NOT NULL,
-    contrasenia varchar(255) NOT NULL
+    contrasenia varchar(255) NOT NULL,
+    rol varchar(10) DEFAULT 'user'
 );
 
 CREATE TABLE categoria(
