@@ -42,14 +42,6 @@ CREATE TABLE carrito(
     FOREIGN KEY (producto_id) REFERENCES productos(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE envios(
-    id int AUTO_INCREMENT PRIMARY KEY,
-    cliente_id int,
-    empresa_envio varchar(100) NOT NULL,
-    estado varchar(30) NOT NULL,
-    FOREIGN KEY (cliente_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE resenias(
     id int AUTO_INCREMENT PRIMARY KEY,
     usuario_id int,
