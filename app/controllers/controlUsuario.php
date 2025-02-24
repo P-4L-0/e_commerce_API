@@ -26,6 +26,7 @@ class UsuarioControlador
         if (!isset($data['email'], $data['password'])) {
             http_response_code(400);
             echo json_encode(["Error" => "El correo y la contraseña con requeridos"]);
+            return; 
         }
 
         //Obtener usuario por email

@@ -10,9 +10,10 @@ require_once __DIR__ . '/app/middleware/tokenVerify.php';
 header("Content-Type: application/json");
 
 $controlador = new UsuarioControlador();
-$auth = new tokenVerify();
+$category = new CategoryController();
+$auth = new Token();
 
-//obtencion del metodo
+//obtención del método http
 $method = $_SERVER["REQUEST_METHOD"];
 $uri = explode("/", trim($_SERVER["REQUEST_URI"], "/"));
 
@@ -29,8 +30,8 @@ $routes = [
         'producto' => function():void{
 
         },
-        'category' => function():void{
-            
+        'category' => function() use ($category):void{
+            $category->create();
         },
         'carrito' => function():void{
 
@@ -48,11 +49,27 @@ $routes = [
         },
         'reseñas' => function():void{
             
+        },
+        'category' => function() use ($category): void{
+            $category->getOne();
+        },
+        'categorys' => function() use ($category):void{
+            $category->getAll();
+        }
+    ],
+    'PATCH' => [
+        'category' => function() use ($category){
+            $category->update();
+        }
+    ],
+    "DELETE"=>[
+        'category' => function() use ($category): void{
+            $category->delete();
         }
     ]
 ];
 
-if (isset($routes[$method][$uri])) {
+if (isset($routes[$method][$uri[0]])) {
     $routes[$method][$uri[0]]();
 } else {
     http_response_code(404);

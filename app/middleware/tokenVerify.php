@@ -6,7 +6,7 @@ require_once __DIR__ . '/../config/database.php';
 USE Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class tokenVerify{
+class Token{
 
     Private PDO $db; 
 
