@@ -28,9 +28,9 @@ class Usuario
         //retorna null si  no existe el dato 
     }
 
-    public function crear_usuario($nombre,$email,$direccion, $telefono, $contraseña):void{
-        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, direccion, telefono, contrasenia) VALUES (?,?,?,?,?) ");
-        $stmt->execute([$nombre, $email, $direccion, $telefono, $contraseña]);
+    public function crear_usuario($nombre,$email,$direccion, $telefono, $contraseña, $rol):void{
+        $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, direccion, telefono, contrasenia, rol) VALUES (?,?,?,?,?,?) ");
+        $stmt->execute([$nombre, $email, $direccion, $telefono, $contraseña, $rol]);
     } 
 
 }

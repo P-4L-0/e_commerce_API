@@ -24,14 +24,14 @@ class ProductoController
     {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if (!isset($data['nombre'])) {
-            http_response_code(400);
-            echo json_encode(["Error" => "Nombre es requerido"]);
+        if (!isset($data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categria'])) {
+            http_response_code(401);
+            echo json_encode(["Error" => "Campos requeridos"]);
             return;
         }
 
         try {
-            $this->producto->crear_categoría($data['nombre']);
+            $this->producto->crear_producto($data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categria']);
         } catch (PDOException $e) {
             echo json_encode(["Error" => $e]);
         }
@@ -41,8 +41,8 @@ class ProductoController
     {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['id'], $data['nombre'])){
-            http_response_code(400);
+        if(!isset($data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categoria'])){
+            http_response_code(401);
             echo json_encode(["Error" => "Campos requeridos"]);
             return;
         }

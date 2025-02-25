@@ -16,13 +16,13 @@ class Carrito
     {
         $stmt = $this->db->prepare("SELECT * FROM carrito WHERE usuario_id = :id");
         $stmt->execute(["id" => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: NULL;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: NULL;
     }
 
-    public function crear_carrito($user_id, $producto_id, $cantidad, $precio): void
+    public function crear_carrito($usuario_id, $producto_id, $cantidad, $precio): void
     {
         $stmt = $this->db->prepare("INSERT INTO carrito (usuario_id, producto_id, cantidad_producto, precio) VALUES (?,?,?,?)");
-        $stmt->execute([$user_id, $producto_id, $cantidad, $precio]);
+        $stmt->execute([$usuario_id, $producto_id, $cantidad, $precio]);
     }
 
     public function eliminar($id): void

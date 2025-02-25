@@ -14,17 +14,24 @@ class Token{
         $this->db = Database::connection();
     }
 
-    public function obtenerToken(): stdClass{
+    public function obtenerToken(): ?stdClass{
         $headers = apache_request_headers();
+        if(!isset($headers['Authorization'])){
+            return null; 
+        }
         $auth = $headers['Authorization'];
         $authArray = explode(' ', $auth);
         $token = $authArray[1];
-        $decode = JWT::decode($token, new Key('APP_PASSWORD', 'HS256'));
+        $key = getenv('JWT_SECRET');
+        $decode = JWT::decode($token, new Key($key, 'HS256'));
         return $decode;
     }
 
-    public function verify(){
+    public function verify(): mixed{
         $info = $this->obtenerToken();
+        if(!$info){
+            return null;
+        }
         $stmt = $this->db->prepare("SELECT `rol` FROM usuarios WHERE id = :id");
         $stmt->execute(["id" => $info->data]);
         $rows = $stmt->fetchColumn();

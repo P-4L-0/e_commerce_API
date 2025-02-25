@@ -33,7 +33,7 @@ class UsuarioControlador
         $user = $this->user->obtener_usuario($data['email']);
 
         if (!$user || !password_verify($data['password'], $user['contrasenia'])) {
-            http_response_code(401);
+            http_response_code(400);
             echo json_encode(["Error" => "credenciales incorrectas"]);
             return;
         }
@@ -79,10 +79,15 @@ class UsuarioControlador
             return;
         }
 
+        //por si el rol no se define en la petición http
+        if(!isset($data['rol'])){
+            $rol = 'user';
+        }
+
         $hash_passwd = password_hash($data['password'], PASSWORD_BCRYPT);
 
         try{
-            $new_user = $this->user->crear_usuario($data['nombre'], $data['email'],$data['direccion'], $data['telefono'], $hash_passwd);
+            $new_user = $this->user->crear_usuario($data['nombre'], $data['email'],$data['direccion'], $data['telefono'], $hash_passwd, $rol);
         }catch(PDOException $e){
             echo json_encode(["Error" => $e]);
         }

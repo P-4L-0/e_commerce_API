@@ -46,7 +46,7 @@ $routes = [
             }
         },
         'carrito' => function () use ($carrito, $auth): void {
-            if ($auth->verify() === 'admin') {
+            if ($auth->verify() === 'user') {
                 $carrito->create();
             } else {
                 http_response_code(401);
@@ -70,7 +70,7 @@ $routes = [
             $category->getAll();
         },
     ],
-    'UPDATE' => [
+    'PUT' => [
         'category' => function () use ($category, $auth) {
             if ($auth->verify() === 'admin') {
                 $category->update();
