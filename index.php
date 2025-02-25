@@ -4,21 +4,23 @@ require_once __DIR__ . '/app/controllers/controlUsuario.php';
 require_once __DIR__ . '/app/controllers/controlCarrito.php';
 require_once __DIR__ . '/app/controllers/controlCategoria.php';
 require_once __DIR__ . '/app/controllers/controlProducto.php';
-require_once __DIR__ . '/app/controllers/controlReseña.php';
 require_once __DIR__ . '/app/middleware/tokenVerify.php';
 
+//tipo de header
 header("Content-Type: application/json");
 
+//instancia de controladores
 $controlador = new UsuarioControlador();
 $category = new CategoryController();
 $auth = new Token();
+$carrito = new CarritoController();
+$producto = new ProductoController();
 
 //obtención del método http
 $method = $_SERVER["REQUEST_METHOD"];
 $uri = explode("/", trim($_SERVER["REQUEST_URI"], "/"));
 
 //rutas de la api
-
 $routes = [
     'POST' => [
         'register' => function () use ($controlador): void {
@@ -27,44 +29,89 @@ $routes = [
         'login' => function () use ($controlador): void {
             $controlador->login();
         },
-        'producto' => function():void{
-
+        'producto' => function () use ($producto, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $producto->create();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
         },
-        'category' => function() use ($category):void{
-            $category->create();
+        'category' => function () use ($category, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $category->create();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
         },
-        'carrito' => function():void{
-
-        },
-        'reseña' => function():void{
-
+        'carrito' => function () use ($carrito, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $carrito->create();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
         }
     ],
     'GET' => [
-        'carrito'=> function():void{
-
+        'carrito' => function () use ($carrito, $auth): void {
+            if ($auth->verify() === 'user') {
+                $carrito->getAll();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
         },
-        'productos' => function():void{
-
+        'productos' => function () use ($producto, $auth): void {
+            $producto->getAll();
         },
-        'reseñas' => function():void{
-            
-        },
-        'category' => function() use ($category): void{
-            $category->getOne();
-        },
-        'categorys' => function() use ($category):void{
+        'category' => function () use ($category): void {
             $category->getAll();
+        },
+    ],
+    'UPDATE' => [
+        'category' => function () use ($category, $auth) {
+            if ($auth->verify() === 'admin') {
+                $category->update();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
+        },
+        'producto' => function () use ($producto, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $producto->update();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
         }
     ],
-    'PATCH' => [
-        'category' => function() use ($category){
-            $category->update();
-        }
-    ],
-    "DELETE"=>[
-        'category' => function() use ($category): void{
-            $category->delete();
+    "DELETE" => [
+        'category' => function () use ($category, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $category->delete();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
+        },
+        'carrito' => function () use ($carrito, $auth): void {
+            if ($auth->verify() === 'user') {
+                $carrito->delete();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Error" => "Unauthorized"]);
+            }
+        },
+        'producto' => function () use ($producto, $auth): void {
+            if ($auth->verify() === 'admin') {
+                $producto->delete();
+            } else {
+                http_response_code(401);
+                echo json_encode(["Er[ror" => "Unauthorized"]);
+            }
         }
     ]
 ];
@@ -73,7 +120,7 @@ if (isset($routes[$method][$uri[0]])) {
     $routes[$method][$uri[0]]();
 } else {
     http_response_code(404);
-    echo json_encode(["error" => "Ruta no encontrada", "status" => 404]);
+    echo json_encode(["error" => "Not Found", "status" => 404]);
 }
 
 ?>

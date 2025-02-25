@@ -18,12 +18,12 @@ class Categoría
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtener_categoría($id): ?array
-    {
-        $stmt = $this->db->prepare("SELECT * FROM categoria WHERE codigo = :id");
-        $stmt->execute(["id" => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: NULL;
-    }
+    // public function obtener_categoría($id): ?array
+    // {
+    //     $stmt = $this->db->prepare("SELECT * FROM categoria WHERE codigo = :id");
+    //     $stmt->execute(["id" => $id]);
+    //     return $stmt->fetch(PDO::FETCH_ASSOC) ?: NULL;
+    // }
 
     public function crear_categoría($nombre): void
     {

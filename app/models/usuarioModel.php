@@ -18,7 +18,7 @@ class Usuario
     public function obtener_usuarios(): array
     {
         $stmt = $this->db->query("SELECT * FROM usuarios");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: NULL;
     }
 
     public function obtener_usuario($email): ?array{

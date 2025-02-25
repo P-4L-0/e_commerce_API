@@ -20,21 +20,21 @@ class CategoryController
         echo json_encode($categorías);
     }
 
-    public function getOne(): void
-    {
-        $data = json_decode(file_get_contents("php://input"), true);
+    // public function getOne(): void
+    // {
+    //     $data = json_decode(file_get_contents("php://input"), true);
 
-        if (!isset($data['id'])) {
-            http_response_code(400);
-            echo json_encode(["Error" => "Identificador invalido"]);
-            return;
-        }
+    //     if (!isset($data['id'])) {
+    //         http_response_code(400);
+    //         echo json_encode(["Error" => "Identificador invalido"]);
+    //         return;
+    //     }
 
-        $category = $this->category->obtener_categoría($data['id']);
+    //     $category = $this->category->obtener_categoría($data['id']);
 
-        echo json_encode($category);
+    //     echo json_encode($category);
 
-    }
+    // }
 
     public function create(): void
     {

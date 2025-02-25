@@ -38,9 +38,10 @@ class UsuarioControlador
             return;
         }
 
+        //generar token jwt
         $createTime = time();
         $expiration = $createTime + 3600;
-        $key = "APP_PASSWORD"; //esto no debería de hacerse pero lo hago ps pq puedo :v
+        $key = getenv("JWT_SECRET");
         $payload = [
             "exp" => $expiration,
             "data" => $user['id']
