@@ -9,8 +9,10 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # copiar archivos
-COPY ./index.php /var/www/html
-COPY ./vendor /var/www/html
+# COPY ./index.php /var/www/html
+# COPY ./vendor /var/www/html
+COPY . /var/www/html/
+
 
 # permisos del directorio
 RUN chown -R www-data:www-data /var/www/html

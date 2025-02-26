@@ -16,7 +16,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD:  root
-      MYSQ_DATABASE: e_commerce
+      MYSQL_DATABASE: e_commerce
       MYSQL_USER: user
       MYSQL_PASSWORD: secret 
     ports:

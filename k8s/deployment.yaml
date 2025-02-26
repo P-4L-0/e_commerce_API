@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-rest
+spec:
+  replicas: 3  # Número inicial de réplicas
+  selector:
+    matchLabels:
+      app: api-rest
+  template:
+    metadata:
+      labels:
+        app: api-rest
+    spec:
+      containers:
+        - name: api-rest
+          image: mi-app:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
