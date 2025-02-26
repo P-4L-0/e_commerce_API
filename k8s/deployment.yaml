@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-rest
-          image: mi-app:v1
+          image: php-api-rest-app
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
