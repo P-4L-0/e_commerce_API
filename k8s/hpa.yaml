@@ -6,8 +6,8 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-erst
-  minReplicas: 2
+    name: api-rest
+  minReplicas: 2 
   maxReplicas: 10
   metrics:
     - type: Resource
@@ -15,4 +15,4 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 50  #50% de uso del cpu

@@ -19,9 +19,9 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: root
             - name: MYSQL_DATABASE
-              value: e_commerce  
+              value: e_commerce
             - name: MYSQL_USER
-              value: user 
+              value: user
             - name: MYSQL_PASSWORD
               value: secret
           ports:

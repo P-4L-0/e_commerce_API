@@ -15,13 +15,13 @@ spec:
       containers:
         - name: api-rest
           image: mi-app:v1
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
           resources:
             requests:
-              cpu: "250m"
+              cpu: "250m"  #mínimo 0.25 cpu
               memory: "512Mi"
             limits:
-              cpu: "500m"
+              cpu: "500m" #máximo 0.5 cpu
               memory: "1Gi"

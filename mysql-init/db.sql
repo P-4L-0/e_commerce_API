@@ -1,13 +1,13 @@
-CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'secret';
+CREATE USER 'user'@'%' IDENTIFIED BY 'secret';
 
-CREATE DATABASE e_commerce;
+CREATE DATABASE IF NOT EXISTS e_commerce;
 
 GRANT ALL PRIVILEGES ON e_commerce.* TO 'user'@'%';
 FLUSH PRIVILEGES;
 
 USE e_commerce;
 
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(30) NOT NULL,
     email varchar(100) UNIQUE NOT NULL,
@@ -17,12 +17,12 @@ CREATE TABLE usuarios (
     rol varchar(10) DEFAULT 'user'
 );
 
-CREATE TABLE categoria(
+CREATE TABLE IF NOT EXISTS categoria(
     codigo int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(50) NOT NULL
 );
 
-CREATE TABLE productos(
+CREATE TABLE IF NOT EXISTS productos(
     id int AUTO_INCREMENT PRIMARY KEY,
     nombre varchar(50) NOT NULL,
     descripcion LONGTEXT NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE productos(
     ON UPDATE CASCADE 
 );
 
-CREATE TABLE carrito(
+CREATE TABLE IF NOT EXISTS carrito(
     id int AUTO_INCREMENT PRIMARY KEY,
     usuario_id int NOT NULL,
     producto_id int NOT NULL,
