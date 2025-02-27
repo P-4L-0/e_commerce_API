@@ -35,16 +35,16 @@ class Token
             //token expirado
             return null;
         } catch (\Firebase\JWT\SignatureInvalidException $e) {
-            error_log("Firma del token inválida: " . $e->getMessage());
+            //error de firma incorrecta
             return null;
         } catch (\Firebase\JWT\BeforeValidException $e) {
-            error_log("Token aún no válido: " . $e->getMessage());
+            //token sin validar
             return null;
         } catch (\UnexpectedValueException $e) {
-            error_log("Token mal formado: " . $e->getMessage());
+            //error de token mal formado
             return null;
         } catch (\Exception $e) {
-            error_log("Error desconocido con el token: " . $e->getMessage());
+            //error desconocido
             return null;
         }
     }
