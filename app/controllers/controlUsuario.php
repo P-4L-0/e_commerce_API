@@ -82,6 +82,8 @@ class UsuarioControlador
         //por si el rol no se define en la petición http
         if(!isset($data['rol'])){
             $rol = 'user';
+        }else{
+            $rol = 'admin';
         }
 
         $hash_passwd = password_hash($data['password'], PASSWORD_BCRYPT);
