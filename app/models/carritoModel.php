@@ -31,6 +31,11 @@ class Carrito
         $stmt->execute(["id" => $id]);
     }
 
+    public function __destruct()
+    {
+        Database::disconnect();
+    }
+
 }
 
 

@@ -91,7 +91,7 @@ class UsuarioControlador
         try{
             $new_user = $this->user->crear_usuario($data['nombre'], $data['email'],$data['direccion'], $data['telefono'], $hash_passwd, $rol);
         }catch(PDOException $e){
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
 
         echo json_encode(["message" => "Registro exitoso"]);

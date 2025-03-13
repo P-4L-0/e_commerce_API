@@ -33,7 +33,7 @@ class CarritoController
         try {
             $this->carrito->crear_carrito($data['usuario_id'], $data["producto_id"],$data['cantidad'], $data['precio']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 
@@ -50,7 +50,7 @@ class CarritoController
         try {
             $this->carrito->eliminar($data['id']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 

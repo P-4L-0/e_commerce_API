@@ -6,12 +6,13 @@ class Database
 {
 
     private static ?PDO $connection = null;
+    private static int $instancias = 0;
 
-        //variables de entorno
-        private const HOST = "db";
-        private const DBNAME = "e_commerce";
-        private const USER = "user";
-        private const PASSWD = "secret";
+    //variables de entorno
+    private const HOST = "db";
+    private const DBNAME = "e_commerce";
+    private const USER = "user";
+    private const PASSWD = "secret";
 
     public static function connection(): PDO
     {
@@ -23,7 +24,7 @@ class Database
         try {
             if (self::$connection === null) {
 
-                self::$connection = new PDO("mysql:host=".self::HOST. ";dbname=" .self::DBNAME. ";", self::USER, self::PASSWD);
+                self::$connection = new PDO("mysql:host=" . self::HOST . ";dbname=" . self::DBNAME . ";", self::USER, self::PASSWD);
 
                 //manejo de errores
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,22 +40,17 @@ class Database
             // return null;
         }
 
+        self::$instancias++;
         return self::$connection;
     }
 
-    public static function disconnection(): void{
-        if(self::connection() !== null){
-            self::connection() = null; 
+    public static function disconnect(): void
+    {
+        self::$instancias--;
+        if (self::$instancias <= 0) {
+            self::$connection = null;
         }
     }
 }
-
-
-
-
-
-
-
-
 
 ?>

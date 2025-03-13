@@ -49,7 +49,7 @@ class CategoryController
         try {
             $this->category->crear_categoría($data['nombre']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 
@@ -66,7 +66,7 @@ class CategoryController
         try {
             $this->category->actualizar($data['id'], $data['nombre']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 
@@ -83,7 +83,7 @@ class CategoryController
         try {
             $this->category->eliminar($data['id']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 

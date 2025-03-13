@@ -21,17 +21,24 @@ class Usuario
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: NULL;
     }
 
-    public function obtener_usuario($email): ?array{
-        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email");    
+    public function obtener_usuario($email): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email");
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: NULL;
         //retorna null si  no existe el dato 
     }
 
-    public function crear_usuario($nombre,$email,$direccion, $telefono, $contraseña, $rol):void{
+    public function crear_usuario($nombre, $email, $direccion, $telefono, $contraseña, $rol): void
+    {
         $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, email, direccion, telefono, contrasenia, rol) VALUES (?,?,?,?,?,?) ");
         $stmt->execute([$nombre, $email, $direccion, $telefono, $contraseña, $rol]);
-    } 
+    }
+
+    public function __destruct()
+    {
+        Database::disconnect();
+    }
 
 }
 

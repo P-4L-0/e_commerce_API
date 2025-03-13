@@ -34,13 +34,18 @@ class Categoría
     public function actualizar($id, $nombre): void
     {
         $stmt = $this->db->prepare("UPDATE categoria SET nombre = :nombre WHERE codigo = :id");
-        $stmt->execute(["nombre" => $nombre,"id" => $id]);
+        $stmt->execute(["nombre" => $nombre, "id" => $id]);
     }
 
     public function eliminar($id): void
     {
         $stmt = $this->db->prepare("DELETE FROM categoria WHERE codigo = :id");
         $stmt->execute(["id" => $id]);
+    }
+
+    public function __destruct()
+    {
+        Database::disconnect();
     }
 
 }

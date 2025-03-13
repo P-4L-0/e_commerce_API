@@ -33,7 +33,7 @@ class ProductoController
         try {
             $this->producto->crear_producto($data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categria']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 
@@ -41,16 +41,16 @@ class ProductoController
     {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categoria'])){
+        if(!isset($data['id'],$data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categoria'])){
             http_response_code(401);
             echo json_encode(["Error" => "Campos requeridos"]);
             return;
         }
 
         try {
-            $this->producto->actualizar($data['id'], $data['nombre']);
+            $this->producto->actualizar($data['id'], $data['nombre'],$data['descripcion'], $data['precio'], $data['stock'], $data['codigo_categoria']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 
@@ -67,7 +67,7 @@ class ProductoController
         try {
             $this->producto->eliminar($data['id']);
         } catch (PDOException $e) {
-            echo json_encode(["Error" => $e]);
+            echo json_encode(["Error" => $e->getMessage()]);
         }
     }
 

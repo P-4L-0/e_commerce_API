@@ -40,13 +40,19 @@ class Producto
             "precio" => $precio,
             "stock" => $stock,
             "codigo" => $codigo_categoria,
-            "id" => $id]);
+            "id" => $id
+        ]);
     }
 
     public function eliminar($id): void
     {
         $stmt = $this->db->prepare("DELETE FROM productos WHERE id = :id");
         $stmt->execute(["id" => $id]);
+    }
+
+    public function __destruct()
+    {
+        Database::disconnect();
     }
 
 }
